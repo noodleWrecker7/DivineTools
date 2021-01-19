@@ -1,7 +1,12 @@
-item.divinetools.test_item.name=Test Item
-item.divinetools.itemgodbaguette.name=Christ's Body
+item.divinetools:test_item.name=Test Item
+item.divinetools:itemgodbaguette.name=Christ's Body
+item.divinetools:divinitepickaxe.name=Divine Pickaxe
+item.divinetools:diviniteaxe.name=Divine Axe
+item.divinetools:diviniteshovel.name=Divine Shovel
+item.divinetools:itemingotdivinite.name=Divine Ingot
 
-tile.divinetools.newblock.name=New Block
-tile.divinetools.oredivinite.name=Divinite Ore
+tile.divinetools:newblock.name=New Block
+tile.divinetools:oredivinite.name=Divinite Ore
+
 
 itemGroup.divinetools=Divine Tools

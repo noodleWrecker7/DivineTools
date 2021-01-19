@@ -1,4 +1,4 @@
-package noodlewrecker7.divinetools;
+package noodlewrecker7.divinetools.init;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -11,22 +11,27 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import noodlewrecker7.divinetools.DivineTools;
 import noodlewrecker7.divinetools.block.NewBlock;
 import noodlewrecker7.divinetools.block.OreDivinite;
 import noodlewrecker7.divinetools.entity.PetDragon;
-import noodlewrecker7.divinetools.init.ModBlocks;
-import noodlewrecker7.divinetools.init.ModItems;
-import noodlewrecker7.divinetools.item.ItemGodBaguette;
+import noodlewrecker7.divinetools.item.ItemIngotDivinite;
+import noodlewrecker7.divinetools.item.tools.DiviniteAxe;
+import noodlewrecker7.divinetools.item.tools.DivinitePickaxe;
+import noodlewrecker7.divinetools.item.tools.DiviniteShovel;
+import noodlewrecker7.divinetools.item.tools.ItemGodBaguette;
+import noodlewrecker7.divinetools.world.WorldGen;
 
 
 @Mod.EventBusSubscriber(modid = DivineTools.MODID)
-public class registrationHandler {
+public class registrationHandler { // handles registration of all modifications
 
     private static int entityId = 0;
 
-    public static void initRecipes() {
+    public static void initMisc() {
+        DivineTools.logDebug("registering smelting recipes");
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.oredivinite), new ItemStack(ModItems.itemingotdivinite, 1), 2f);
-
+        GameRegistry.registerWorldGenerator(new WorldGen(), 0);
     }
 
     @SubscribeEvent
@@ -34,7 +39,11 @@ public class registrationHandler {
 
         final Item[] items = {
                 new Item().setRegistryName(DivineTools.MODID, "testitem").setCreativeTab(DivineTools.MOD_TAB).setUnlocalizedName(DivineTools.MODID + ".test_item"),
-                new ItemGodBaguette(DivineTools.DiviniteMaterial)
+                new ItemGodBaguette(DivineTools.DiviniteMaterial),
+                new DivinitePickaxe(),
+                new DiviniteShovel(),
+                new DiviniteAxe(),
+                new ItemIngotDivinite()
         };
 
         final Item[] itemBlocks = {
@@ -57,7 +66,7 @@ public class registrationHandler {
     }
 
     @SubscribeEvent
-    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) { // todo remove
 
         final ResourceLocation dragonRegistryName = new ResourceLocation(DivineTools.MODID, "pet");
 

@@ -1,10 +1,12 @@
-package noodlewrecker7.divinetools.item;
+package noodlewrecker7.divinetools.item.tools;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -17,21 +19,25 @@ public class ItemGodBaguette extends ItemTool {
 
     protected float efficiency = 20f;
     //    final private java.util.Map<String, Integer> toolClasses = new java.util.HashMap<String, Integer>();
-    final private ImmutableSet<String> toolClassesSet = ImmutableSet.of("hoe", "pickaxe", "spade", "axe", "sword");
+    final private ImmutableSet<String> toolClassesSet = ImmutableSet.of("hoe", "pickaxe", "shovel", "axe", "sword");
     protected int harvestLevel = 5;
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet();
 
     public ItemGodBaguette(ToolMaterial material) {
         super(material, Sets.newHashSet());
         setRegistryName(DivineTools.MODID, "itemgodbaguette");
-        setUnlocalizedName(DivineTools.MODID + ".itemgodbaguette");
-        setCreativeTab(DivineTools.MOD_TAB);
+        setUnlocalizedName(getRegistryName().toString());
 
 
         for (String tool : toolClassesSet) {
             setHarvestLevel(tool, harvestLevel);
         }
 
+    }
+
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{DivineTools.MOD_TAB, CreativeTabs.TOOLS};
     }
 
     @Override
@@ -64,8 +70,17 @@ public class ItemGodBaguette extends ItemTool {
 
     @Override
     public boolean canHarvestBlock(IBlockState state) {
-        return true;
-        // todo work this out using state.getMaterial and state.getblock.getHarvest levels  ex - https://github.com/MelanX/aiotbotania/blob/1.12.2/src/main/java/de/melanx/aiotbotania/items/base/ItemAIOTBase.java
+//        return true;
+        Material beingMined = state.getMaterial();
+        int requiredLevel = state.getBlock().getHarvestLevel(state);
+
+        if(beingMined.isToolNotRequired()) return true;
+
+        if(harvestLevel > requiredLevel) return true;
+
+        return super.canHarvestBlock(state);
+
+        // i should really work this out using state.getMaterial and state.getblock.getHarvest levels  ex - https://github.com/MelanX/aiotbotania/blob/1.12.2/src/main/java/de/melanx/aiotbotania/items/base/ItemAIOTBase.java
         /*DivineTools.logInfo("HARVESTING BLOCK w/ TOOL:" + state.getBlock().getHarvestTool(state));
         if (toolClassesSet.contains(state.getBlock().getHarvestTool(state))) {
             return true;

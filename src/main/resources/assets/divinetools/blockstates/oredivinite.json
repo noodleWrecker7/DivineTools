@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "divinetools:oredivinite"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
